@@ -1,5 +1,6 @@
 package net.lshimokawa.ejemplos.apachecxf.jaxws.service;
 
+import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import net.lshimokawa.ejemplos.apachecxf.jaxws.model.Usuario;
@@ -10,12 +11,12 @@ import net.lshimokawa.ejemplos.apachecxf.jaxws.model.Usuario;
 @WebService
 public interface UsuarioService {
 
-	Usuario find(String username);
+	Usuario find(@WebParam(name = "username") String username);
 
-	void save(Usuario usuario);
+	void save(@WebParam(name = "usuario") Usuario usuario);
 
-	void update(Usuario usuario);
+	void update(@WebParam(name = "usuario") Usuario usuario);
 
-	void delete(Usuario usuario);
+	void delete(@WebParam(name = "usuario") Usuario usuario);
 
 }
