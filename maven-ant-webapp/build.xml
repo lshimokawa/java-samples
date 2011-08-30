@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!-- Autor: Lennon Shimokawa -->
+<project name="maven-ant-webapp" basedir="." default="deploy" xmlns:artifact="urn:maven-artifact-ant">
+
+	<!-- Directorios del proyecto -->
+	<property name="src.dir" value="src/main/java" />
+	<property name="resources.dir" value="src/main/resources" />
+	<property name="web.dir" value="src/main/webapp" />
+	<property name="test.src" value="src/test/java" />
+	<property name="test.resources.dir" value="src/test/resources" />
+	<property name="dist.dir" value="dist" />
+	<property name="build.dir" value="target" />
+	<property name="test.dir" value="${build.dir}/test" />
+
+	<!-- Properties -->
+	<property file="build.properties" />
+
+	<!-- Directorios del servidor -->
+	<property name="work.dir" value="${server.home}/work" />
+	<property name="deploy.dir" value="${server.home}/webapps" />
+	<property name="webapps.dir" value="${server.home}/webapps" />
+	<property name="webapp.dir" value="${webapps.dir}/${webapp.name}" />
+
+	<!-- Integración con Maven -->
+	<typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant">
+		<classpath>
+			<pathelement location="${basedir}/lib/maven-artifact-ant-2.0.4-dep.jar" />
+		</classpath>
+	</typedef>
+	<artifact:pom file="pom.xml" id="maven.project" />
+	<artifact:dependencies pathId="compile.classpath" filesetId="compile.fileset" useScope="compile">
+		<pom refid="maven.project" />
+	</artifact:dependencies>
+	<artifact:dependencies pathId="test.classpath" filesetId="test.fileset" useScope="test">
+		<pom refid="maven.project" />
+	</artifact:dependencies>
+	<artifact:dependencies pathId="runtime.classpath" filesetId="runtime.fileset" useScope="runtime">
+		<pom refid="maven.project" />
+	</artifact:dependencies>
+
+	<!-- Targets -->
+	<target name="compile" description="Compile main source tree java files">
+		<mkdir dir="${build.dir}/classes" />
+		<javac destdir="${build.dir}/classes" debug="true" optimize="false" deprecation="false" failonerror="true">
+			<src path="${src.dir}" />
+			<classpath>
+				<path refid="compile.classpath" />
+				<fileset dir="${web.dir}/WEB-INF/lib" includes="*.jar" />
+			</classpath>
+		</javac>
+		<!-- Compile tests -->
+		<mkdir dir="${test.dir}/classes" />
+		<javac destdir="${test.dir}/classes" debug="true" optimize="false" deprecation="false" failonerror="true">
+			<src path="${test.src}" />
+			<classpath>
+				<path refid="test.classpath" />
+				<path location="${build.dir}/classes" />
+				<fileset dir="${web.dir}/WEB-INF/lib" includes="*.jar" />
+			</classpath>
+		</javac>
+		<!-- Copy XML files to ${build.dir}/classes -->
+		<copy todir="${build.dir}/classes">
+			<fileset dir="${src.dir}" includes="**/*.xml" />
+		</copy>
+	</target>
+
+	<target name="copy-jars" description="Copies JARs from local repository">
+		<mkdir dir="${build.dir}/jars" />
+		<copy todir="${build.dir}/jars">
+			<fileset refid="runtime.fileset" />
+			<mapper type="flatten" />
+		</copy>
+	</target>
+
+	<target name="copy-web" description="Copy static web resources to servlet container's deploy directory">
+		<echo message="Copying static web resources to ${webapp.dir}" />
+		<copy todir="${webapp.dir}" preservelastmodified="true" includeemptydirs="false">
+			<fileset dir="${web.dir}">
+				<exclude name="**/*.xml" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="war" depends="compile,copy-jars" description="Packages app as WAR">
+		<mkdir dir="${dist.dir}" />
+		<war destfile="${dist.dir}/${webapp.name}.war" webxml="${web.dir}/WEB-INF/web.xml" compress="true">
+			<classes dir="${build.dir}/classes" />
+			<classes dir="${resources.dir}" />
+			<fileset dir="${web.dir}" excludes="**/web.xml" />
+			<zipfileset prefix="WEB-INF/lib" dir="${build.dir}/jars" />
+		</war>
+	</target>
+
+	<target name="undeploy" description="Deletes application from server">
+		<delete dir="${webapp.dir}" />
+		<delete dir="${work.dir}" />
+	</target>
+
+	<target name="deploy" depends="war" description="Deploy application as a WAR file">
+		<copy todir="${deploy.dir}" preservelastmodified="true" file="${dist.dir}/${webapp.name}.war" />
+	</target>
+
+	<target name="clean" description="Clean output directories">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+</project>

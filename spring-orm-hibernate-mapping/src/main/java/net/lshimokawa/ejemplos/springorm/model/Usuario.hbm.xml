@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2011 07:52:10 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="net.lshimokawa.ejemplos.springorm.model.Usuario"
+		table="usuario">
+		<id name="idUsuario" type="java.lang.Integer" column="id_usuario">
+			<generator class="native" />
+		</id>
+		<property name="username" type="java.lang.String" column="username"
+			unique="true" />
+		<property name="password" type="java.lang.String" column="password" />
+		<property name="nombre" type="java.lang.String" column="nombre" />
+		<many-to-one name="pais" column="pais" />
+
+		<set name="roles" table="usuario_rol">
+			<key column="id_usuario"></key>
+			<many-to-many column="id_rol"
+				class="net.lshimokawa.ejemplos.springorm.model.Rol" />
+		</set>
+	</class>
+</hibernate-mapping>

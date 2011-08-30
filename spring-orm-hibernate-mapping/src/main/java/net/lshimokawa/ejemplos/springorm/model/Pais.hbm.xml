@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2011 07:52:10 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="net.lshimokawa.ejemplos.springorm.model.Pais" table="pais">
+		<id name="codigo" type="java.lang.String" column="codigo">
+			<generator class="assigned" />
+		</id>
+		<property name="nombre" type="java.lang.String" column="nombre" />
+	</class>
+</hibernate-mapping>

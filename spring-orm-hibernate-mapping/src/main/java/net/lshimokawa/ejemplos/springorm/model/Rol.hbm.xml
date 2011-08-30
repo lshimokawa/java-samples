@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2011 07:52:10 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="net.lshimokawa.ejemplos.springorm.model.Rol" table="rol">
+		<id name="idRol" type="java.lang.Integer" column="id_rol">
+			<generator class="native" />
+		</id>
+		<property name="nombre" type="java.lang.String" column="nombre" />
+		<property name="descripcion" type="java.lang.String" column="descripcion" />
+	</class>
+</hibernate-mapping>
