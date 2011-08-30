@@ -21,7 +21,7 @@ public class HelloWorldIntegrationTest {
 	private UsuarioService usuarioService;
 
 	@Test
-	public void testSaludar() {
-		Assert.assertEquals("Hola Lennon", usuarioService.find("Lennon"));
+	public void testFind() {
+		Assert.assertEquals("Lennon", usuarioService.find("Lennon").getNombre());
 	}
 }

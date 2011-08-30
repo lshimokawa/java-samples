@@ -5,7 +5,7 @@
 						http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
 	<jaxws:client id="helloWorldClient"
-		serviceClass="net.lshimokawa.ejemplos.apachecxf.jaxws.HelloWorld"
-		address="http://localhost:8080/apachecxf-jaxws-helloworld/helloworld" />
+		serviceClass="net.lshimokawa.ejemplos.apachecxf.jaxws.service.UsuarioService"
+		address="http://localhost:8080/apachecxf-jaxws-crud/usuario" />
 
 </beans>
