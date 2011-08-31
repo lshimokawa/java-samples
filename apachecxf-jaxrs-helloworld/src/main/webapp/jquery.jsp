@@ -2,20 +2,20 @@
 <head>
 <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
 <script>
-	$(document).ready(function() {
-		$("#myButton").click(function() {
-			$.ajax({
-				url: '${pageContext.request.contextPath}/services/rest/helloworld/saludar/'+$("#nombre").val(),
-				type: 'GET',
-				success: function(data) {
-					$("#saludo").html(data);
-				},
-				error: function(data) {
-					alert("Error");
-				}
-			});
+$(document).ready(function() {
+	$("#myButton").click(function() {
+		$.ajax({
+			url: '${pageContext.request.contextPath}/services/rest/helloworld/saludar/'+$("#nombre").val(),
+			type: 'GET',
+			success: function(data) {
+				$("#saludo").html(data);
+			},
+			error: function(data) {
+				alert("Error");
+			}
 		});
-	 });
+	});
+ });
 </script>
 </head>
 <body>
