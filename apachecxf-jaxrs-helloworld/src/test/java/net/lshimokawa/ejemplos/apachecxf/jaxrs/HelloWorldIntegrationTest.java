@@ -18,19 +18,38 @@ import org.junit.Test;
  * 
  */
 public class HelloWorldIntegrationTest {
+	private HttpClient httpclient = new DefaultHttpClient();
+	private String BASE_URL = "http://localhost:8080/apachecxf-jaxrs-helloworld/services/rest/helloworld/";
 
 	@Test
-	public void test() throws Exception {
-		HttpClient httpclient = new DefaultHttpClient();
-		final String nombre = "Lennon";
-		HttpGet httpget = new HttpGet(
-				"http://localhost:8080/apachecxf-jaxrs-helloworld/services/rest/helloworld/saludar/"
-						+ nombre);
-		HttpResponse response = httpclient.execute(httpget);
-		HttpEntity entity = response.getEntity();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				entity.getContent()));
-		Assert.assertEquals("Hello World Lennon",
-				reader.readLine());
+	public void saludar() {
+		Assert.assertEquals("Hello World", getResponse(BASE_URL + "saludar"));
+	}
+
+	@Test
+	public void saludarNombre() {
+		Assert.assertEquals("Hello World Lennon", getResponse(BASE_URL
+				+ "saludar/Lennon"));
+	}
+	
+	@Test
+	public void saludarNombreApellido() {
+		Assert.assertEquals("Hello World Lennon Shimokawa", getResponse(BASE_URL
+				+ "saludar/Lennon/Shimokawa"));
+	}
+
+	private String getResponse(String url) {
+		String response = null;
+		try {
+			HttpGet httpGet = new HttpGet(url);
+			HttpResponse httpResponse = httpclient.execute(httpGet);
+			HttpEntity entity = httpResponse.getEntity();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					entity.getContent()));
+			response = reader.readLine();
+		} catch (Exception e) {
+			Assert.fail();
+		}
+		return response;
 	}
 }
