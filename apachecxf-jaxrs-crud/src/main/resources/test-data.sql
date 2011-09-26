@@ -1,3 +1,4 @@
-insert into usuario(username, password, nombre) values('lshimokawa', '1234', 'Lennon');
-insert into usuario(username, password, nombre) values('user', '5678', 'Usuario');
+insert into books(isbn, title, author) values('0201699699', 'Agile Software Development', 'Alistair Cockburn');
+insert into books(isbn, title, author) values('0132350882', 'Clean Code: A Handbook of Agile Software Craftsmanship', 'Robert C. Martin');
+
 
