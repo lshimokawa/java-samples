@@ -5,17 +5,19 @@
 <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
 <script>
 $(document).ready(function() {
-	$("#find").click(function() {
-		$.ajax({
-			url: '${pageContext.request.contextPath}/services/books/'+$("#isbn").val(),
-			type: 'GET',
-			success: function(data) {
-				$("#datos").html(data.book.title + ' by ' + data.book.author);
-			},
-			error: function(data) {
-				alert("Error");
-			}
-		});
+	$.ajax({
+		url: '${pageContext.request.contextPath}/services/books',
+		type: 'GET',
+		success: function(data) {
+			$.each(data.books, function(i, book){
+				$('#list').append(
+					'<li>' + book.title + ' by ' + book.author + '</li>'
+				);
+			});
+		},
+		error: function(data) {
+			alert("Error");
+		}
 	});
  });
 </script>
@@ -24,13 +26,9 @@ $(document).ready(function() {
 	<div class="container">
 		<div class="content">
 			<div class="page-header">
-				<h1>Apache CXF JAX-RS - JQuery</h1>
+				<h1>Bookshelf</h1>
 			</div>
-			ISBN: <input id="isbn" type="text" value="0201699699" />
-			<button id="find" class="btn primary">Find</button>
-			<p>
-				<span id="datos"></span>
-			</p>
+			<ul id="list"></ul>
 		</div>
 	</div>
 </body>

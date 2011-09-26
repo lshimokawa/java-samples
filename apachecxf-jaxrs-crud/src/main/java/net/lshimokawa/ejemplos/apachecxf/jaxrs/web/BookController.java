@@ -7,6 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import net.lshimokawa.ejemplos.book.model.Book;
 import net.lshimokawa.ejemplos.book.service.BookService;
@@ -14,8 +15,8 @@ import net.lshimokawa.ejemplos.book.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Path("/books")
-@Produces("application/json")
-@Consumes("application/json")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class BookController {
 
 	@Autowired
@@ -33,14 +34,17 @@ public class BookController {
 		return bookService.find(isbn);
 	}
 
+	// TODO
 	public void save(Book book) {
 		bookService.save(book);
 	}
-
+	
+	// TODO
 	public void update(Book usuario) {
 		bookService.update(usuario);
 	}
 
+	// TODO
 	public void delete(Book usuario) {
 		bookService.delete(usuario);
 	}
