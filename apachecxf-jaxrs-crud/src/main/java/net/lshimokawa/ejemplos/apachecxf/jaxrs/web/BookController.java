@@ -18,7 +18,7 @@ import net.lshimokawa.ejemplos.book.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Path("/books")
-public class BookRestController {
+public class BookController {
 
 	@Autowired
 	private BookService bookService;
