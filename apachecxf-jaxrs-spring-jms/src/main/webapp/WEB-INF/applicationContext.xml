@@ -1,0 +1,31 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       					http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL">
+			<value>tcp://localhost:61616</value>
+		</property>
+	</bean>
+
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+	</bean>
+
+	<bean id="restJmsController"
+		class="net.lshimokawa.ejemplos.apachecxf.jaxrs.RestJmsController">
+		<property name="destinationName" value="queue_request" />
+		<property name="jmsTemplate" ref="jmsTemplate" />
+	</bean>
+
+	<jaxrs:server id="restContainer" address="/rest">
+		<jaxrs:serviceBeans>
+			<ref bean="restJmsController" />
+		</jaxrs:serviceBeans>
+	</jaxrs:server>
+
+</beans>
