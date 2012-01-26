@@ -5,7 +5,7 @@
 	version="2.5">
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>apachecxf-jaxrs-helloworld</param-value>
+		<param-value>apachecxf-jaxrs-crud</param-value>
 	</context-param>
 
 	<context-param>
