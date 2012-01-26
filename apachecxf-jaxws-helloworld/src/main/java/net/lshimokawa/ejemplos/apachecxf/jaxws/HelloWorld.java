@@ -1,5 +1,6 @@
 package net.lshimokawa.ejemplos.apachecxf.jaxws;
 
+import javax.jws.WebParam;
 import javax.jws.WebService;
 
 /**
@@ -8,6 +9,6 @@ import javax.jws.WebService;
 @WebService
 public interface HelloWorld {
 
-	public String saludar(String nombre);
+	public String saludar(@WebParam(name = "nombre") String nombre);
 
 }
