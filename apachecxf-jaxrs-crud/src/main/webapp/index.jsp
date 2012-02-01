@@ -5,11 +5,12 @@
 <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
 <script>
 $(document).ready(function() {
+	alert();
 	$.ajax({
 		url: '${pageContext.request.contextPath}/services/books',
 		type: 'GET',
 		success: function(data) {
-			$.each(data.books, function(i, book){
+			$.each(data, function(i, book){
 				$('#list').append(
 					'<li>' + book.title + ' by ' + book.author + '</li>'
 				);
