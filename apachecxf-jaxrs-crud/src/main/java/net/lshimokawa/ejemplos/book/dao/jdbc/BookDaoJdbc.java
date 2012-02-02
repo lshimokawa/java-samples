@@ -57,9 +57,8 @@ public class BookDaoJdbc extends SimpleJdbcDaoSupport implements BookDao {
 	}
 
 	@Override
-	public void delete(Book book) {
-		getSimpleJdbcTemplate().update("delete from books where isbn=?",
-				book.getIsbn());
+	public void delete(String isbn) {
+		getSimpleJdbcTemplate().update("delete from books where isbn=?", isbn);
 	}
 
 }

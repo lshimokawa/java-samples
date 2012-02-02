@@ -65,10 +65,8 @@ public class BookController {
 	@Path("/{isbn}")
 	@DELETE
 	public Response delete(String isbn) {
-		Book book = new Book();
-		book.setIsbn(isbn);
 		try {
-			bookService.delete(book);
+			bookService.delete(isbn);
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR)
 					.entity("Error al eliminar el libro").build();
