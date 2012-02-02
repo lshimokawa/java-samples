@@ -20,10 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.gson.Gson;
 
 @Path("/books")
-@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML,
-		MediaType.TEXT_PLAIN })
-@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML,
-		MediaType.TEXT_PLAIN })
+@Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN })
+@Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN })
 public class BookController {
 
 	@Autowired
