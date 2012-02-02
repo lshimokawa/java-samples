@@ -42,7 +42,7 @@ public class BookController {
 			return Response.status(Status.INTERNAL_SERVER_ERROR)
 					.entity("El libro no existe").build();
 		}
-		return Response.ok(book).build();
+		return Response.ok(gson.toJson(book)).build();
 	}
 
 	@POST
