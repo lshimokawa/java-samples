@@ -40,7 +40,7 @@ public class BookDaoTest {
 		bookDao.create(create);
 		Assert.assertEquals("New title", bookDao.find(create.getId())
 				.getTitle());
-		logger.debug("Usuario creado");
+		logger.debug("Libro creado, con id=" + create.getId());
 
 		Book update = bookDao.find(create.getId());
 		update.setTitle("Updated title");

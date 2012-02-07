@@ -12,9 +12,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import net.lshimokawa.ejemplos.book.model.Book;
-import net.lshimokawa.ejemplos.book.service.BookService;
+import net.lshimokawa.ejemplos.bookstore.model.Book;
+import net.lshimokawa.ejemplos.bookstore.service.BookService;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
@@ -23,6 +24,7 @@ import com.google.gson.Gson;
 @Consumes({ MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN })
 @Produces({ MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN })
 public class BookController {
+	private static final Logger logger = Logger.getLogger(BookController.class);
 
 	@Autowired
 	private BookService bookService;
@@ -34,10 +36,10 @@ public class BookController {
 		return Response.ok(gson.toJson(bookService.findAll())).build();
 	}
 
-	@Path("/{isbn}")
+	@Path("/{id}")
 	@GET
-	public Response find(@PathParam("isbn") String isbn) {
-		Book book = bookService.find(isbn);
+	public Response find(@PathParam("id") Integer id) {
+		Book book = bookService.find(id);
 		if (book == null) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR)
 					.entity("El libro no existe").build();
@@ -47,13 +49,17 @@ public class BookController {
 
 	@POST
 	public Response save(String json) {
+		Book book = gson.fromJson(json, Book.class);
+		logger.debug(book.getId());
 		try {
-			bookService.save(gson.fromJson(json, Book.class));
+			bookService.create(book);
+			logger.debug(book.getId());
+			logger.debug(gson.toJson(bookService.findAll()));
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR)
 					.entity("Error al guardar el libro").build();
 		}
-		return Response.ok().build();
+		return Response.ok(gson.toJson(book)).build();
 	}
 
 	@PUT
@@ -62,11 +68,11 @@ public class BookController {
 		return Response.ok().build();
 	}
 
-	@Path("/{isbn}")
+	@Path("/{id}")
 	@DELETE
-	public Response delete(String isbn) {
+	public Response delete(@PathParam("id") Integer id) {
 		try {
-			bookService.delete(isbn);
+			bookService.delete(id);
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR)
 					.entity("Error al eliminar el libro").build();

@@ -6,14 +6,18 @@ import net.lshimokawa.ejemplos.bookstore.dao.BookDao;
 import net.lshimokawa.ejemplos.bookstore.model.Book;
 import net.lshimokawa.ejemplos.bookstore.service.BookService;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author lshimokawa
  */
 @Service
+@Transactional
 public class BookServiceImpl implements BookService {
+	private Logger logger = Logger.getLogger(BookServiceImpl.class);
 	@Autowired
 	private BookDao bookDao;
 
@@ -30,6 +34,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void create(Book book) {
 		bookDao.create(book);
+		logger.debug("Book created with id: " + book.getId());
 	}
 
 	@Override

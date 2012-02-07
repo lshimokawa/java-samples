@@ -43,12 +43,12 @@ public class BookDaoJdbc extends SimpleJdbcDaoSupport implements BookDao {
 	}
 
 	@Override
-	public void create(final Book book) {
+	public void create(Book book) {
 		getJdbcTemplate().update(
 				"insert into books (title, author) values(?, ?)",
 				book.getTitle(), book.getAuthor());
 		// Setear el id autogenerado por el identity de HSQL
-		book.setId(getSimpleJdbcTemplate().queryForInt("call identity();"));
+		book.setId(getSimpleJdbcTemplate().queryForInt("call identity()"));
 	}
 
 	@Override
