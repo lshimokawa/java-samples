@@ -1,11 +1,11 @@
-package net.lshimokawa.ejemplos.book.dao.jdbc;
+package net.lshimokawa.ejemplos.bookstore.dao.jdbc;
 
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import net.lshimokawa.ejemplos.book.dao.BookDao;
-import net.lshimokawa.ejemplos.book.model.Book;
+import net.lshimokawa.ejemplos.bookstore.dao.BookDao;
+import net.lshimokawa.ejemplos.bookstore.model.Book;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -26,11 +26,11 @@ public class BookDaoJdbc extends SimpleJdbcDaoSupport implements BookDao {
 		setDataSource(dataSource);
 	}
 
-	public Book find(String isbn) {
+	public Book find(Integer id) {
 		try {
 			return getSimpleJdbcTemplate().queryForObject(
-					"select isbn, title, author from books where isbn=?",
-					new BeanPropertyRowMapper<Book>(Book.class), isbn);
+					"select id, title, author from books where id=?",
+					new BeanPropertyRowMapper<Book>(Book.class), id);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -38,28 +38,28 @@ public class BookDaoJdbc extends SimpleJdbcDaoSupport implements BookDao {
 
 	public List<Book> findAll() {
 		return getSimpleJdbcTemplate().query(
-				"select isbn, title, author from books",
+				"select id, title, author from books",
 				new BeanPropertyRowMapper<Book>(Book.class));
 	}
 
 	@Override
-	public void save(Book book) {
-		getSimpleJdbcTemplate().update(
-				"insert into books(isbn, title, author) values (?, ?, ?)",
-				book.getIsbn(), book.getTitle(), book.getAuthor());
+	public void create(final Book book) {
+		getJdbcTemplate().update(
+				"insert into books (title, author) values(?, ?)",
+				book.getTitle(), book.getAuthor());
+		book.setId(getSimpleJdbcTemplate().queryForInt("call identity();"));
 	}
 
 	@Override
 	public void update(Book book) {
 		getSimpleJdbcTemplate().update(
-				"update books set title=?, author=? where isbn=?",
-				book.getTitle(), book.getAuthor(), book.getIsbn());
+				"update books set title=?, author=? where id=?",
+				book.getTitle(), book.getAuthor(), book.getId());
 	}
 
 	@Override
-	public void delete(Book book) {
-		getSimpleJdbcTemplate().update("delete from books where isbn=?",
-				book.getIsbn());
+	public void delete(Integer id) {
+		getSimpleJdbcTemplate().update("delete from books where id=?", id);
 	}
 
 }

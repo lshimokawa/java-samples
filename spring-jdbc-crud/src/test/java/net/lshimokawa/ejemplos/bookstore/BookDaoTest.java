@@ -1,7 +1,7 @@
-package net.lshimokawa.ejemplos.book;
+package net.lshimokawa.ejemplos.bookstore;
 
-import net.lshimokawa.ejemplos.book.dao.BookDao;
-import net.lshimokawa.ejemplos.book.model.Book;
+import net.lshimokawa.ejemplos.bookstore.dao.BookDao;
+import net.lshimokawa.ejemplos.bookstore.model.Book;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -27,32 +27,29 @@ public class BookDaoTest {
 	private BookDao bookDao;
 
 	@Test
-	public void testFind() {
-		Assert.assertEquals("Agile Software Development",
-				bookDao.find("0201699699").getTitle());
+	public void testShow() {
+		Assert.assertEquals("Agile Software Development", bookDao.find(0)
+				.getTitle());
 	}
 
 	@Test
 	public void testCrud() {
 		Book create = new Book();
-		create.setIsbn("0123456789");
 		create.setTitle("New title");
 		create.setAuthor("New author");
-		bookDao.save(create);
-		Assert.assertEquals("New title", bookDao.find(create.getIsbn())
+		bookDao.create(create);
+		Assert.assertEquals("New title", bookDao.find(create.getId())
 				.getTitle());
 		logger.debug("Usuario creado");
 
-		Book update = bookDao.find(create.getIsbn());
+		Book update = bookDao.find(create.getId());
 		update.setTitle("Updated title");
 		bookDao.update(update);
-		Assert.assertEquals("Updated title", bookDao.find(create.getIsbn())
+		Assert.assertEquals("Updated title", bookDao.find(create.getId())
 				.getTitle());
 
-		Book delete = new Book();
-		delete.setIsbn(create.getIsbn());
-		bookDao.delete(bookDao.find(create.getIsbn()));
+		bookDao.delete(create.getId());
 
-		Assert.assertNull(bookDao.find(create.getIsbn()));
+		Assert.assertNull(bookDao.find(create.getId()));
 	}
 }

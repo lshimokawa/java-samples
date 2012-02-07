@@ -1,4 +1,4 @@
-package net.lshimokawa.ejemplos.book.model;
+package net.lshimokawa.ejemplos.bookstore.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -9,16 +9,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class Book {
-	private String isbn;
+	private Integer id;
 	private String title;
+	private String description;
 	private String author;
 
-	public String getIsbn() {
-		return isbn;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getTitle() {
@@ -27,6 +28,14 @@ public class Book {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getAuthor() {
