@@ -47,6 +47,7 @@ public class BookDaoJdbc extends SimpleJdbcDaoSupport implements BookDao {
 		getJdbcTemplate().update(
 				"insert into books (title, author) values(?, ?)",
 				book.getTitle(), book.getAuthor());
+		// Setear el id autogenerado por el identity de HSQL
 		book.setId(getSimpleJdbcTemplate().queryForInt("call identity();"));
 	}
 
