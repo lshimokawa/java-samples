@@ -16,6 +16,7 @@
 
 	<bean id="queueListener" class="net.lshimokawa.ejemplos.springjms.QueueListener" />
 
+	<!-- Para topics utilizar: destination-type="topic" -->
 	<jms:listener-container destination-type="queue">
 		<jms:listener destination="queue_request" ref="queueListener" />
 	</jms:listener-container>

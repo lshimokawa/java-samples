@@ -11,6 +11,7 @@
 
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory" ref="connectionFactory" />
+		<!--  Para topics utilizar: property name="pubSubDomain" value="true" / -->
 	</bean>
 
 </beans>

@@ -5,7 +5,7 @@
 	version="2.5">
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>apachecxf-jaxrs-crud</param-value>
+		<param-value>apachecxf-jaxrs-helloworld</param-value>
 	</context-param>
 
 	<context-param>
@@ -29,6 +29,6 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CXFServlet</servlet-name>
-		<url-pattern>/services/*</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 </web-app>

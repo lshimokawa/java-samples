@@ -34,8 +34,8 @@ public class BookServiceImpl implements BookService {
 		bookDao.update(usuario);
 	}
 
-	public void delete(Book usuario) {
-		bookDao.delete(usuario);
+	public void delete(String isbn) {
+		bookDao.delete(isbn);
 	}
 
 }

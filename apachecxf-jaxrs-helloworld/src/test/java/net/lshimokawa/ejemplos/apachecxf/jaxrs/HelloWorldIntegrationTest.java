@@ -13,6 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.Test;
 
 /**
+ * JUnit Integration Test using HttpClient from Apache Commons 
  * 
  * @author lshimokawa
  * 
