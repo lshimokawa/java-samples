@@ -4,12 +4,20 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
+	<!-- Configuración del Web Service -->
+
+	<!-- Imports necesarios de Apache CXF -->
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
+	<!-- Bean de Spring que implementa el Web Service -->
 	<bean id="helloWorld" class="net.lshimokawa.ejemplos.apachecxf.jaxws.HelloWorldImpl" />
 
+	<!-- Configuración de Apache CXF, el implementor es el id del bean de Spring 
+		con # por delante. El address es el endpoint donde se despliega el Web Service. 
+		Hay que considerar también el servlet-mapping donde está configurado el Apache 
+		CXF en el web.xml -->
 	<jaxws:endpoint id="helloWorldEndpoint" implementor="#helloWorld"
 		address="/helloworld" />
 
