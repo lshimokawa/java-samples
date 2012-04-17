@@ -1,56 +1,54 @@
 package net.lshimokawa.ejemplos.apachecxf.jaxrs;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-import junit.framework.Assert;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.client.RestTemplate;
 
 /**
- * JUnit Integration Test using HttpClient from Apache Commons 
+ * Test de integraci—n del Web Service RESTful. Utiliza el RestTemplate de
+ * Spring.
  * 
  * @author lshimokawa
  * 
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/applicationContext-test.xml")
 public class HelloWorldIntegrationTest {
-	private HttpClient httpclient = new DefaultHttpClient();
+	/**
+	 * URL base del Web Service RESTful
+	 */
 	private String BASE_URL = "http://localhost:8080/apachecxf-jaxrs-helloworld/services/rest/helloworld/";
 
+	/**
+	 * Bean configurado por Spring. Con el RestTemplate se pueden probar
+	 * servicios RESTful.
+	 */
+	@Autowired
+	private RestTemplate restTemplate;
+
 	@Test
-	public void saludar() {
-		Assert.assertEquals("Hello World", getResponse(BASE_URL + "saludar"));
+	public void testSaludar() {
+		// getForObject hace un request GET a la URL, el segundo par‡metro es el
+		// tipo de dato de retorno
+		Assert.assertEquals("Hello World",
+				restTemplate.getForObject(BASE_URL + "saludar", String.class));
 	}
 
 	@Test
-	public void saludarNombre() {
-		Assert.assertEquals("Hello World Lennon", getResponse(BASE_URL
-				+ "saludar/Lennon"));
-	}
-	
-	@Test
-	public void saludarNombreApellido() {
-		Assert.assertEquals("Hello World Lennon Shimokawa", getResponse(BASE_URL
-				+ "saludar/Lennon/Shimokawa"));
+	public void testSaludarNombre() {
+		Assert.assertEquals("Hello World Lennon", restTemplate.getForObject(
+				BASE_URL + "saludar/Lennon", String.class));
 	}
 
-	private String getResponse(String url) {
-		String response = null;
-		try {
-			HttpGet httpGet = new HttpGet(url);
-			HttpResponse httpResponse = httpclient.execute(httpGet);
-			HttpEntity entity = httpResponse.getEntity();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					entity.getContent()));
-			response = reader.readLine();
-		} catch (Exception e) {
-			Assert.fail();
-		}
-		return response;
+	@Test
+	public void testSaludarNombreApellido() {
+		Assert.assertEquals("Hello World Lennon Shimokawa", restTemplate
+				.getForObject(BASE_URL + "saludar/Lennon/Shimokawa",
+						String.class));
 	}
+
 }
