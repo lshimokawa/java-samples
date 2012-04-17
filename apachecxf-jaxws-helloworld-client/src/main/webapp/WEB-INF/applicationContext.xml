@@ -4,6 +4,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
+	<!-- Configuración del cliente Web Service, el address es el endpoint del 
+		Web Service -->
 	<jaxws:client id="helloWorld"
 		serviceClass="net.lshimokawa.ejemplos.apachecxf.jaxws.HelloWorld"
 		address="http://localhost:8080/apachecxf-jaxws-helloworld/helloworld" />

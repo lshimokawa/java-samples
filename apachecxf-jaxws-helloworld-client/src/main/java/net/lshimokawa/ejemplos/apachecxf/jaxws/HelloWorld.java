@@ -3,6 +3,7 @@ package net.lshimokawa.ejemplos.apachecxf.jaxws;
 import javax.jws.WebService;
 
 /**
+ * Copia de la interface del Web Service.
  * 
  * @author lshimokawa
  *
