@@ -27,9 +27,14 @@ public class BookDaoTest {
 	private BookDao bookDao;
 
 	@Test
-	public void testShow() {
+	public void testFind() {
 		Assert.assertEquals("Agile Software Development", bookDao.find(0)
 				.getTitle());
+	}
+	
+	@Test
+	public void testNotFound() {
+		logger.debug(bookDao.find(999));
 	}
 
 	@Test

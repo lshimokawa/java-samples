@@ -8,7 +8,6 @@ import net.lshimokawa.ejemplos.bookstore.dao.BookDao;
 import net.lshimokawa.ejemplos.bookstore.model.Book;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -27,13 +26,9 @@ public class BookDaoJdbc extends SimpleJdbcDaoSupport implements BookDao {
 	}
 
 	public Book find(Integer id) {
-		try {
-			return getSimpleJdbcTemplate().queryForObject(
-					"select id, title, author from books where id=?",
-					new BeanPropertyRowMapper<Book>(Book.class), id);
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
+		return getSimpleJdbcTemplate().queryForObject(
+				"select id, title, author from books where id=?",
+				new BeanPropertyRowMapper<Book>(Book.class), id);
 	}
 
 	public List<Book> findAll() {

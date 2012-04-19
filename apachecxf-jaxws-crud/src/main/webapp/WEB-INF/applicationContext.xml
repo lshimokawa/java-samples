@@ -16,11 +16,11 @@
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
-	<bean id="usuarioService"
-		class="net.lshimokawa.ejemplos.apachecxf.jaxws.service.impl.UsuarioServiceImpl" />
+	<bean id="bookWebService"
+		class="net.lshimokawa.ejemplos.apachecxf.jaxws.BookWebServiceImpl" />
 
-	<jaxws:endpoint id="usuarioEndpoint" implementor="#usuarioService"
-		address="/usuario" />
+	<jaxws:endpoint id="usuarioEndpoint" implementor="#bookWebService"
+		address="/books" />
 
 	<jdbc:embedded-database id="dataSource">
 		<jdbc:script location="classpath:schema.sql" />

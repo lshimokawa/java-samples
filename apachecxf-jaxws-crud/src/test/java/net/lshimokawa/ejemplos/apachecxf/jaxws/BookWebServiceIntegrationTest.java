@@ -1,9 +1,6 @@
 package net.lshimokawa.ejemplos.apachecxf.jaxws;
 
-import junit.framework.Assert;
-
-import net.lshimokawa.ejemplos.apachecxf.jaxws.service.UsuarioService;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +8,26 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
+ * Test de integraci—n del Web Service.
+ * 
  * @author lshimokawa
  */
 @ContextConfiguration("/applicationContext-test.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
-public class HelloWorldIntegrationTest {
+public class BookWebServiceIntegrationTest {
 
 	@Autowired
-	private UsuarioService usuarioService;
+	private BookWebService bookWebService;
 
 	@Test
 	public void testFind() {
-		Assert.assertEquals("Lennon", usuarioService.find("Lennon").getNombre());
+		Assert.assertEquals("Agile Software Development", bookWebService
+				.find(0).getTitle());
+	}
+	
+	@Test
+	public void testFind2() {
+		Assert.assertEquals("Agile Software Development", bookWebService
+				.find(99).getTitle());
 	}
 }
