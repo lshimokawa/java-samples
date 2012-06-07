@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.annotation.ExpectedException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +35,9 @@ public class BookDaoTest {
 	}
 	
 	@Test
+	@ExpectedException(EmptyResultDataAccessException.class)
 	public void testNotFound() {
-		logger.debug(bookDao.find(999));
+		bookDao.find(999);
 	}
 
 	@Test
@@ -54,7 +57,10 @@ public class BookDaoTest {
 				.getTitle());
 
 		bookDao.delete(create.getId());
-
-		Assert.assertNull(bookDao.find(create.getId()));
+		try {
+			bookDao.find(create.getId());
+			Assert.fail();
+		} catch (EmptyResultDataAccessException e){
+		}
 	}
 }
